@@ -8,6 +8,7 @@ let equation = [];
 let firstNum = null;
 let secondNum = null;
 let operator = null;
+let complete = false;
 
 function add(a, b) {
 	return a+b;
@@ -44,13 +45,26 @@ function operate(operation, num1, num2) {
 	}
 	display.textContent = answer;
 	equation = [answer];
+	complete = true;
 }
 
 function setDisplay() {
-	equation.push(this.value);
-	let displayTxt = equation.join('')
-	display.textContent = displayTxt;
-	console.log(equation.toString());
+	if (this.value == '.') {
+		if (equation.includes('.')) {
+			return;
+		}
+	}
+	if (complete == true) {
+		display.textContent = '';
+		equation = [];
+	} 
+	if (equation.length < 23) {
+		equation.push(this.value);
+		let displayTxt = equation.join('')
+		display.textContent = displayTxt;
+		console.log(equation.toString());
+		complete = false;
+	}
 }
 
 buttons.forEach(button => button.addEventListener('click', setDisplay));
